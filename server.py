@@ -119,4 +119,4 @@ class Handler(SimpleHTTPRequestHandler):
     except Exception:pass
    return self.send({'ok':True})
   except (ValueError,KeyError,TypeError) as e:return self.send({'error':str(e)},400)
-if __name__=='__main__':ThreadingHTTPServer(('127.0.0.1',int(os.getenv('PORT','8000'))),Handler).serve_forever()
+if __name__=='__main__':ThreadingHTTPServer(('0.0.0.0',int(os.getenv('PORT','8000'))),Handler).serve_forever()
