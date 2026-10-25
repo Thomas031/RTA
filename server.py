@@ -51,7 +51,14 @@ class Handler(SimpleHTTPRequestHandler):
     if not roles:return self.redirect('/?auth=denied')
     sid=secrets.token_urlsafe(40);SESSIONS[sid]={'id':identity['id'],'name':identity.get('global_name') or identity['username'],'roles':roles,'csrf':secrets.token_urlsafe(32),'expires':time.time()+3600}
     return self.redirect('/#personnel','rta_session='+sid+'; HttpOnly; SameSite=Lax; Path=/; Max-Age=3600'+('; Secure' if os.getenv('BASE_URL','').startswith('https:') else ''))
-   except Exception:return self.redirect('/?auth=error')
+      except Exception as e:
+    print(
+     "Échec connexion Discord :",
+     type(e).__name__,
+     "statut HTTP :", getattr(e, "code", "aucun"),
+     flush=True
+    )
+    return self.redirect('/?auth=error')
   if path.path=='/api/public':return self.send({'active':len([s for s in records('services') if not s.get('end') and s.get('line')=='1']),'traffic':records('traffic'),'fares':records('fares')})
   if path.path=='/api/me':return self.send(self.user())
   if path.path.startswith('/api/'):
