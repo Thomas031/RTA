@@ -1,6 +1,4 @@
-Remplace tout le contenu de **`public/app.js`** par ceci :
-
-```javascript
+javascript
 const app = document.querySelector('#app');
 let me = null;
 let tab = 'services';
@@ -599,4 +597,4 @@ if (auth) {
     error: 'Connexion Discord impossible. Vérifiez la configuration.'
   }[auth] || 'Connexion impossible');
 }
-```
+
